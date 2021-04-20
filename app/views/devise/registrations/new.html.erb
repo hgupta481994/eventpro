@@ -1,0 +1,39 @@
+
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<body>
+
+  <header class="w3-container w3-teal">
+    <h1>Sign up</h1>
+  </header>
+
+  <div class="w3-container w3-half w3-margin-top">
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), :html=> {:class=> "w3-container w3-card-4"} ) do |f| %>
+      <%= render "devise/shared/error_messages", resource: resource %>
+
+      <p>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email", class: "w3-input", required: true,style: "width:90%" %>     
+          <%= f.label :email %>
+      </p>
+      <p>
+        <%= f.password_field :password, autocomplete: "new-password", class: "w3-input", required: true,style: "width:90%" %>
+        <% if @minimum_password_length %>
+          <em>(<%= @minimum_password_length %> characters minimum)</em>
+        <% end %>
+        <%= f.label :password %>
+      </p>
+      <p>
+        <%= f.password_field :password_confirmation, autocomplete: "new-password", class: "w3-input", required: true,style: "width:90%" %>
+        <%= f.label :password_confirmation %>
+      </p>
+      <p>
+        <div class="actions">
+          <%= f.submit "Sign up",class: "w3-button w3-section w3-teal w3-ripple" %>
+        </div>
+      </p>
+    <% end %>
+    <%= render "devise/shared/links" %>
+
+  </div>
+</body>
+</html> 

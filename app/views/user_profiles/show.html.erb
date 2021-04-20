@@ -1,0 +1,18 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user_profile.name %>
+</p>
+
+<p>
+  <strong>Gender:</strong>
+  <%= @user_profile.gender ? "Female" : "Male"%>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @user_profile.user.email %>
+</p>
+
+<%= link_to 'Edit', edit_user_profile_path(@user_profile) %> |

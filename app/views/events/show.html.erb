@@ -1,0 +1,73 @@
+<p id="notice"><%= notice %></p>
+
+<div class="w3-section w3-row-padding">
+
+  <div class="w3-twothird">
+    <div class="w3-card-5">
+      <div class="w3-display-container">
+        
+        <h1 class="w3-text-teal"> <%= @event.name.capitalize %> </h1>
+      </div>
+      <div class="w3-container w3-light-grey">
+        <p><%= @event.detail %></p>
+      </div>
+	    <div class="w3-container w3-white">
+	    	<p>Scheduled On:</p>
+	    	<p><%= @event.start %></p>
+	    </div>
+	    <div class="w3-container w3-white">
+	    	<p>Event Fees:</p>
+	    	<% if @discounted_ticket_fee %>
+	    		<!-- Discounted fees -->
+
+	    		<div>
+	    			<p style="text-decoration: line-through"><%= @ticket_fee  %> 
+	    			</p>5% discount
+	    		</div> 
+	    		<%= @discounted_ticket_fee %>
+	    	<%else%>
+	    		<p> <%= @ticket_fee %></p>
+	    	<%end%>
+	    </div>
+	    <div class="w3-container w3-white">
+		    <p>
+		    	<!-- Susbcription -->
+			    <%if @event_subscibed ==false %>
+			    	<%= link_to 'Attend', attend_event_path(@event), class: "w3-text-green", method: :post  %>
+			    <%elsif @event_subscibed  %>
+			    	<p id="notice"><%= "You have subscribed to this event" %></p>
+			    	<%= link_to 'Click to unsuscribe', unattend_event_path(@event), class: "w3-text-red", method: :post  %>
+			    <%end %>
+			  </p>
+			</div>
+
+    </div>
+
+  </div>
+
+  <% if current_user.try(:admin) %>
+  	<!-- Edit option for Admin -->
+
+  	<%= link_to 'Edit', edit_event_path(@event)%> |
+  <% end %>
+
+  <%if current_user %>
+  	<!-- Show subscribers -->
+
+		<div class="w3-third w3-margin-bottom">
+		  <ul class="w3-ul w3-border w3-center w3-hover-shadow">
+		    <li class="w3-green w3-xlarge w3-padding-32">Subscribers</li>
+		    <% @suscribers.each do |user| %>
+		    	<li class="w3-padding-16">
+		    		<%= user.email==current_user.email ? "You  " : user.email %>
+		    		|
+		    		<%= user.user_profile.gender ? "  Female" : "  Male" %>
+		    	</li>
+		    <%end%>
+		    <!-- Pagination -->
+		    <%= will_paginate @suscribers %>
+		  </ul>
+		</div>
+	<%end%>
+	<%= link_to 'Back', events_path %>
+</div>

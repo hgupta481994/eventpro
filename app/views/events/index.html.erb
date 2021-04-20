@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+<h1 class="w3-text-teal"> Events </h1>
+<div class="w3-ul w3-border w3-center">
+  <p class="w3-text-red"> 5% less for females </p>
+  <% @events.each do |event| %>
+    <div class="w3-row w3-padding-64">
+      <div class="w3-twothird w3-container">
+        <li class="w3-xlarge w3-padding-16 w3-hover-shadow">
+          <h2 class="w3-text-green"><%= event.name.capitalize %></h2>
+          <p><%= event.detail.truncate(20) %></p>
+          <p>
+            <h6 class="w3-text-blue">Event scheduled on: </h6>
+            <%= event.start %>
+          </p>
+          <p>
+            <h6 class="w3-text-blue">Event fees: </h6>
+            <%= event.ticket_fee ? event.ticket_fee : "Open Event" %>
+          </p>
+          <%= link_to 'More..', event %>
+          <% if current_user.try(:admin) %>
+            <!-- For Admin -->
+
+            <%= link_to 'Edit', edit_event_path(event) %>
+            <%= link_to 'Destroy', event, method: :delete, data: { confirm: 'Are you sure?' }, class: "w3-text-red" %>
+          <% end %>
+          </li>
+      </div>
+    </div>
+  <% end %>
+  <!-- Pagination -->
+  <%= will_paginate @events %>
+  <br>
+  <% if current_user.try(:admin) %>  
+    <%= link_to 'New Event', new_event_path %>
+  <% end %>
+</div>

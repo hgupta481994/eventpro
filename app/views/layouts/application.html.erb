@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <style>
+    html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
+    .w3-sidebar {
+      z-index: 3;
+      width: 250px;
+      top: 43px;
+      bottom: 0;
+      height: inherit;
+    }
+    </style>
+
+    <title>Eventpro</title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <!-- Navbar -->
+    <div class="w3-top">
+      <div class="w3-bar w3-theme w3-top w3-right-align w3-large">
+        <%= link_to "Home", root_path, class: "w3-bar-item w3-button w3-large w3-hover-white" %>
+        <%if !current_user.present? %>
+          <%= link_to "Sign Up", new_user_registration_path, class: "w3-bar-item w3-button w3-large w3-hover-white" %>
+          <%= link_to "Sign In", new_user_session_path,class: "w3-bar-item w3-button w3-large w3-hover-white"  %>
+
+        <% else %>
+          <%= link_to "Profile", edit_user_profile_path(current_user.user_profile.id), class: "w3-bar-item w3-button w3-large w3-hover-white" if current_user.user_profile%>
+          <%= link_to("Logout", destroy_user_session_path, method:  :delete, class: "w3-bar-item w3-button w3-large w3-hover-white") %>
+        <%end%>
+      </div>
+    </div>
+    <br>
+    <div class="w3-main" style="margin-left:250px">
+      <%= yield %>
+    </div>
+  </body>
+</html>
